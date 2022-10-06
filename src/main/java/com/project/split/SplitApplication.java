@@ -1,4 +1,4 @@
-package com.example.split;
+package com.project.split;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
