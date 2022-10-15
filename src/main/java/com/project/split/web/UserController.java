@@ -1,7 +1,7 @@
 package com.project.split.web;
 
 import com.project.split.entities.*;
-import com.project.split.service.BillService;
+
 import com.project.split.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/split/user")
 public class UserController {
-
-
     private final UserService userService;
-    private final BillService billService;
-    private static final Role ADMIN = new Role(1L, "ADMIN");
-
+    private final UserMapper userMapper;
 
     @GetMapping("/{name}")
     //@PreAuthorize("authentication.principal.id==#id")
@@ -27,28 +23,22 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody User user) {
+    public ResponseEntity<UserDTO> signup(@RequestBody User user) {
         log.info("SIGNUP");
-        return ResponseEntity.ok(userService.save(user));
+        return ResponseEntity.ok(userMapper.toDTO(userService.save(user)));
 
     }
 
     @PatchMapping("/setadmin/{name}")
     public ResponseEntity<String> giveAdminRole(@PathVariable("name") String name) {
-        User user = userService.findByName(name);
-        user.getUserRoles().add(ADMIN);
-        userService.save(user);
-        String ok = "Role changed!!";
-        return ResponseEntity.ok(ok);
+
+        return ResponseEntity.ok(userService.setAdmin(name));
     }
 
     @PatchMapping("/setbill/{nameuser}/{namebill}")
     public ResponseEntity<String> setBill(@PathVariable String nameuser, @PathVariable String namebill) {
-        User user = userService.findByName(nameuser);
-        user.setBill(billService.findByName(namebill));
-        userService.save(user);
-        String ok = "Set Bill!!";
-        return ResponseEntity.ok(ok);
+
+        return ResponseEntity.ok(userService.setBill(nameuser, namebill));
     }
 
     @DeleteMapping("/delete/{name}")

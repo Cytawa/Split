@@ -2,13 +2,10 @@ package com.project.split.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-
 import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,37 +17,22 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails{
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-
-    }
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@Column(unique = true)
-
+    @NonNull
+    @Column(unique = true)
     private String username;
-private int sumOfPay;
+    private int sumOfPay;
+    @NonNull
     private String password;
-    @JsonIgnore
     @ManyToOne
     Bill bill;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "users")
-    Set<Expense> Expenses;
-
-
-   // @JsonIgnore
-    //@ManyToMany(cascade = CascadeType.ALL)
-
-
-   // private Set<Expense> expenses = new HashSet<>();
-
+    Set<Expense> expenses;
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -69,6 +51,7 @@ private int sumOfPay;
                 .map(Role::getRole).map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public String getPassword() {
