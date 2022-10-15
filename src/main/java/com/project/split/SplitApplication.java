@@ -10,4 +10,6 @@ public class SplitApplication {
         SpringApplication.run(SplitApplication.class, args);
     }
 
-}
+
+    }
+
