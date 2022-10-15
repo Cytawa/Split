@@ -1,7 +1,6 @@
 package com.project.split.entities;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,6 +15,11 @@ public class UserMapper {
 
         String password=user.getPassword();
 
-        return new UserDTO(userName,  password);
+        int sumOfPay= user.getSumOfPay();
+        List<Role> userRoles=user.getUserRoles();
+
+        Bill bill=user.getBill();
+
+        return new UserDTO(userName,  password, sumOfPay, userRoles, bill);
     }
 }

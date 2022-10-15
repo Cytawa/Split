@@ -4,7 +4,7 @@ import com.project.split.entities.Bill;
 import com.project.split.repository.BillRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.project.split.exception.NoIdException;
+
 
 import java.util.List;
 
@@ -14,8 +14,6 @@ public class BillService {
 
 
     private final BillRepo billRepo;
-
-
     public Bill save(Bill bill) {
 
         return billRepo.save(bill);
@@ -30,7 +28,7 @@ public class BillService {
         return billRepo.findAll();
     }
 
-    public boolean deleteById(String billName) {
+    public boolean deleteByName(String billName) {
         billRepo.delete(findByName(billName));
         return true;
     }

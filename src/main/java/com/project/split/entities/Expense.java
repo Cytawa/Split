@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,6 +15,7 @@ import java.util.Set;
 public class Expense {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NonNull
@@ -28,13 +27,10 @@ public class Expense {
     @JsonIgnore
     @ManyToOne
     Bill bill;
-
-  //  @ManyToMany (mappedBy = "expenses",  cascade = CascadeType.ALL)
-    //private Set<User> users;
-  @ManyToMany
-  @JoinTable(
-          name = "user_expense",
-          joinColumns = @JoinColumn(name = "expense_id"),
-          inverseJoinColumns = @JoinColumn(name = "user_id"))
-  Set<User> users;
+    @ManyToMany
+    @JoinTable(
+            name = "user_expense",
+            joinColumns = @JoinColumn(name = "expense_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<User> users;
 }

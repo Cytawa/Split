@@ -19,7 +19,6 @@ public class Bill {
     private Long id;
     @NonNull
     private String nameBill;
-
     @JsonIgnore
     @OneToMany(mappedBy = "bill")
     private List<Expense> expenses;
