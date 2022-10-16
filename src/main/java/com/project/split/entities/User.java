@@ -17,7 +17,12 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User  implements UserDetails
+{
+    public User(String userName, String password) {
+        this.username = userName;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,19 +44,14 @@ public class User implements UserDetails {
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> userRoles = new ArrayList<>();
+    private List<Role> userRoles= new ArrayList<>();
 
-    public void setUserRoles(List<Role> userRoles) {
-        this.userRoles = userRoles;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRoles.stream()
-                .map(Role::getRole).map(SimpleGrantedAuthority::new)
+        return userRoles.stream().map(Role::getRole).map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public String getPassword() {
@@ -63,25 +63,24 @@ public class User implements UserDetails {
         return username;
     }
 
-
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -92,5 +91,10 @@ public class User implements UserDetails {
         return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(userRoles, user.userRoles);
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, userRoles);
+    }
 }
+
+

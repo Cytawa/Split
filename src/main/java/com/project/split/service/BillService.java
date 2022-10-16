@@ -21,7 +21,6 @@ public class BillService {
 
     public Bill findByName    (String billName) {
         return billRepo.findByNameBill(billName);
-               // .orElseThrow(()-> new NoIdException("Bill with given name not found"));
     }
 
     public List<Bill> findAll() {

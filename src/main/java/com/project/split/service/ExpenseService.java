@@ -73,13 +73,16 @@ public class ExpenseService {
         }
     }
 
-    public Integer sumOfExpensesByUserName(String userName) {
+    public Integer sumOfExpensesByUserName(String userName, String namebill) {
         Integer sum = 0;
         Integer sumOfPay = 0;
-        for (Integer a : expenseRepo.findExpensesByWhoPay(userName)) {
+        Long billid = billRepo.findByNameBill(namebill).getId();
+
+
+        for (Integer a : expenseRepo.findExpensesByWhoPay(userName, billid)) {
             sumOfPay += a;
         }
-        for (Integer b : expenseRepo.findExpenseUserName(userName)) {
+        for (Integer b : expenseRepo.findExpenseUserName(userName, billid)) {
             sum += b;
         }
         return sum - sumOfPay;

@@ -2,7 +2,6 @@ package com.project.split.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -19,9 +18,11 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NonNull
+    @Column(unique = true)
     private String nameExpanse;
     private Integer sumExpense;
     private Integer splitExpense;
+    //TODO add change currency
     private LocalDate date;
     private String whoPay;
     @JsonIgnore

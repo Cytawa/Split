@@ -17,7 +17,6 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/{name}")
-    //@PreAuthorize("authentication.principal.id==#id")
     public ResponseEntity<User> getByName(@PathVariable final String name) {
         return ResponseEntity.ok(userService.findByName(name));
     }
@@ -42,7 +41,6 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{name}")
-    //@PreAuthorize("authentication.principal.id==#id")
     public ResponseEntity<Boolean> delete(@PathVariable String name) {
         return ResponseEntity.ok(userService.deleteByName(name));
     }

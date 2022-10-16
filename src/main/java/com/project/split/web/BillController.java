@@ -20,10 +20,10 @@ public class BillController {
     private final UserService userService;
     private final ExpenseService expenseService;
 
-    @GetMapping("/{username}")
-    public ResponseEntity<String> findExpenseByUserName(@PathVariable String username) {
+    @GetMapping("/{username}/{billname}")
+    public ResponseEntity<String> findExpenseByUserName(@PathVariable String username,@PathVariable String billname) {
 
-        String ok = "Sum of expenses of " + username + " is " + expenseService.sumOfExpensesByUserName(username);
+        String ok = "Sum of expenses of " + username +" bill id "+billname+ " is " + expenseService.sumOfExpensesByUserName(username, billname);
         return ResponseEntity.ok(ok);
     }
 
@@ -32,13 +32,13 @@ public class BillController {
         return billService.findAll();
     }
 
-    // @Secured("ROLE_ADMIN")
+
     @PostMapping("/save")
     public ResponseEntity<Bill> save(@RequestBody Bill bill) {
         return ResponseEntity.ok(billService.save(bill));
     }
 
-    // @Secured("ROLE_ADMIN")
+
     @DeleteMapping("{name}")
     public ResponseEntity<Boolean> delete(@PathVariable String name) {
         return ResponseEntity.ok(billService.deleteByName(name));

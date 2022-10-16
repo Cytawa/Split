@@ -18,7 +18,7 @@ public class ExpenseControler {
     @GetMapping("/{name}")
     String findExpenseByBillName(@PathVariable String name) {
 
-        return "Sum of expenses in" + name + expenseService.findExpenseByBillName(name);
+        return "Sum of expenses in " + name + " "+expenseService.findExpenseByBillName(name);
     }
 
     @PostMapping
@@ -31,7 +31,6 @@ public class ExpenseControler {
         return ResponseEntity.ok(expenseService.setBill(nameexpensive, namebill));
     }
     @DeleteMapping("/delete/{name}")
-    //@PreAuthorize("authentication.principal.id==#id")
     public ResponseEntity<Boolean> delete(@PathVariable String name) {
         return ResponseEntity.ok(expenseService.deleteByName(name));
     }
