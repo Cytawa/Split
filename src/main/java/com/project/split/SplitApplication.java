@@ -3,6 +3,7 @@ package com.project.split;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class SplitApplication {
 
@@ -10,4 +11,6 @@ public class SplitApplication {
         SpringApplication.run(SplitApplication.class, args);
     }
 
-}
+
+    }
+
