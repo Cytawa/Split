@@ -11,15 +11,15 @@ public interface ExpenseRepo extends JpaRepository<Expense, Long> {
 
     Optional<Expense> findByNameExpanse(String name);
 
-    @Query(nativeQuery = true, value = "select sum_expense  from expense where bill_id=?")
+    @Query(nativeQuery = true, value = "select sum_expense from expense where bill_id=?")
     List<Integer> findExpenseByBillId(Long id);
 
 
-    @Query(nativeQuery = true, value = "select expense.split_expense from expense INNER JOIN user where username=?")
-    List<Integer> findExpenseUserName(String name);
+    @Query(nativeQuery = true, value = "select split_expense from expense where who_pay= ?1 and bill_id= ?2")
+    List<Integer> findExpenseUserName(String name, Long billid);
 
-    @Query(nativeQuery = true, value = "select sum_expense from expense where who_pay=?")
-    List<Integer> findExpensesByWhoPay(String name);
+    @Query(nativeQuery = true, value = "select sum_expense from expense where who_pay= ?1 and bill_id= ?2")
+    List<Integer> findExpensesByWhoPay(String name, Long billid);
 }
 
 

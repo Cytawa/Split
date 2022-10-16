@@ -2,7 +2,6 @@ package com.project.split.entities;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
