@@ -26,9 +26,11 @@ public class BillService {
     public List<Bill> findAll() {
         return billRepo.findAll();
     }
+    //TODO export to *.pdf
 
     public boolean deleteByName(String billName) {
         billRepo.delete(findByName(billName));
         return true;
     }
+    //TODO Add suggested payment between users.
 }

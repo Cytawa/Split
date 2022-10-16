@@ -35,6 +35,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable();
+        /**
+         * Everyone has access to create an account and to create a user.
+         *  Only the admin can remove the bill, user and expense.
+         *  The rest of the queries can be accessed by logged in userst
+         *  */
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/").hasRole("ADMIN")
                 .antMatchers("/split/user/**", "/split/bill/save")
                 .permitAll()
