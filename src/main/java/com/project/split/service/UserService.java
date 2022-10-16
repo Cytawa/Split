@@ -22,16 +22,21 @@ public class UserService  {
 
     private static final Role USER = new Role(2L, "USER");
     private static final Role ADMIN = new Role(1L, "ADMIN");
-
-    public User save(User user) {
-        if (billRepo.findByNameBill(user.getBill().getNameBill()).getUsers().isEmpty()) {
-            user.getUserRoles().add(ADMIN);
-            user.getUserRoles().add(USER);
-        } else {
-            user.getUserRoles().add(USER);
-        }
-        return userRepo.save(user);
+/**
+ * if the user is the first in a given bill,
+ * the roles of user and administrator are assigned,
+ * if there is another, only the role of the user
+ */
+public User save(User user) {
+    if (billRepo.findByNameBill(user.getBill().getNameBill()).getUsers().isEmpty()) {
+        user.getUserRoles().add(ADMIN);
+        user.getUserRoles().add(USER);
+    } else {
+        user.getUserRoles().add(USER);
     }
+    return userRepo.save(user);
+}
+    //TODO show only the bill to which the logged in user belongs
 
     public String setBill(String nameuser, String namebill) {
         User user = userRepo.findByUsername(nameuser);
@@ -40,6 +45,7 @@ public class UserService  {
         return "User added to Bill";
     }
 
+    /**adding ADMIN role to user*/
     public String setAdmin(String name) {
         User user = userRepo.findByUsername(name);
         user.getUserRoles().add(ADMIN);

@@ -21,6 +21,10 @@ public class ExpenseService {
     private final BillRepo billRepo;
     private final UserRepo userRepo;
 
+    /**
+     * calculation of the sum of expenses in a given bill
+     */
+
     public String findExpenseByBillName(String name) {
         List<Integer> expenses = expenseRepo
                 .findExpenseByBillId(billRepo
@@ -43,22 +47,29 @@ public class ExpenseService {
     }
 
     public Expense save(Expense expense) {
+        /**calculating the number of people to divide the expense and the sum after the division*/
         int sum = userRepo.findByUsername(expense.getWhoPay()).getSumOfPay();
         expense.setSplitExpense(expense.getSumExpense() / expense.getUsers().size());
         sum -= (expense.getSumExpense());
         userRepo.findByUsername(expense.getWhoPay()).setSumOfPay(sum);
+        /**adding users to expenses*/
         Set<User> users = new HashSet<>();
         for (User user : expense.getUsers()) {
             users.add(userRepo.findByUsername(user.getUsername()));
         }
         expense.setUsers(users);
+        /**adding split payment to users*/
         for (User user : expense.getUsers()) {
             user.setSumOfPay(user.getSumOfPay() + (expense.getSumExpense() / expense.getUsers().size()));
         }
+        /**adding date of payment*/
         expense.setDate(LocalDate.now());
         return expenseRepo.save(expense);
     }
 
+    /**
+     * assigning the expense to a given bill
+     */
     public String setBill(String nameExpense, String nameBill) {
         Optional<Expense> expense = expenseRepo.findByNameExpanse(nameExpense);
         if (expense.isPresent()) {
@@ -73,6 +84,7 @@ public class ExpenseService {
         }
     }
 
+    /**calculation of the sum of split payments minus the sum of expenses*/
     public Integer sumOfExpensesByUserName(String userName, String namebill) {
         Integer sum = 0;
         Integer sumOfPay = 0;

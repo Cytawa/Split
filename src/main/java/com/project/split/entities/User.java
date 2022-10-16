@@ -6,19 +6,24 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * an entity that stores information about users (name, password, roles, total expenses)
+ */
 @Getter
 @Setter
 @ToString
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User  implements UserDetails
-{
+public class User implements UserDetails {
+    /**
+     * constructor needed to encode the password
+     */
     public User(String userName, String password) {
         this.username = userName;
         this.password = password;
@@ -38,15 +43,20 @@ public class User  implements UserDetails
     @JsonIgnore
     @ManyToMany(mappedBy = "users")
     Set<Expense> expenses;
+    /**
+     * assigning the roles to the users
+     */
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> userRoles= new ArrayList<>();
+    private List<Role> userRoles = new ArrayList<>();
 
-
+    /**
+     * mapping roles to users
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoles.stream().map(Role::getRole).map(SimpleGrantedAuthority::new)

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * an entity that stores information about roles
+ */
 @Entity
 @Data
 @AllArgsConstructor
