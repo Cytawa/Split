@@ -28,6 +28,9 @@ public class UserService  {
  * if there is another, only the role of the user
  */
 public User save(User user) {
+    String encodedPassword = passwordEncoder.encode(user.getPassword());
+
+    user.setPassword(encodedPassword);
     if (billRepo.findByNameBill(user.getBill().getNameBill()).getUsers().isEmpty()) {
         user.getUserRoles().add(ADMIN);
         user.getUserRoles().add(USER);
