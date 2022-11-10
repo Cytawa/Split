@@ -1,5 +1,7 @@
 package com.project.split.web;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.jayway.jsonpath.internal.JsonContext;
 import com.project.split.entities.*;
 
 import com.project.split.service.UserService;
@@ -7,7 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -16,10 +23,17 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
+
+
     @GetMapping("/{name}")
     public ResponseEntity<User> getByName(@PathVariable final String name) {
         return ResponseEntity.ok(userService.findByName(name));
     }
+
+  @GetMapping("/")
+  public ResponseEntity<List<User>> getAllName() {
+    return ResponseEntity.ok(userService.findAllName());
+  }
 
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> signup(@RequestBody User user) {
@@ -34,10 +48,9 @@ public class UserController {
         return ResponseEntity.ok(userService.setAdmin(name));
     }
 
-    @PatchMapping("/setbill/{nameuser}/{namebill}")
-    public ResponseEntity<String> setBill(@PathVariable String nameuser, @PathVariable String namebill) {
-
-        return ResponseEntity.ok(userService.setBill(nameuser, namebill));
+  @PatchMapping(value = "/setbill/", consumes = "application/json", produces = "application/json")
+  public ResponseEntity<String> setBill(@RequestBody User user) {
+    return ResponseEntity.ok(userService.setBill(user.getUsername(), user.getBill().getNameBill()));
     }
 
     @DeleteMapping("/delete/{name}")

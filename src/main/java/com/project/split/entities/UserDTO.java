@@ -1,13 +1,8 @@
 package com.project.split.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserDTO {
 
     private String name;
@@ -16,6 +11,15 @@ public class UserDTO {
     private List<Role> userRoles;
     private Bill bill;
 
+  public UserDTO(String name, String password, int sumOfPay, List<Role> userRoles, Bill bill) {
+    this.name = name;
+    this.password = password;
+    this.sumOfPay = sumOfPay;
+    this.userRoles = userRoles;
+    this.bill = bill;
+  }
+
+  public UserDTO() {}
 
     public String getName() {
         return name;
