@@ -35,6 +35,11 @@ public class UserController {
     return ResponseEntity.ok(userService.findAllName());
   }
 
+  @GetMapping("/bill/{bill}")
+  public ResponseEntity<List<User>> getByBill(@PathVariable final String bill) {
+    return ResponseEntity.ok(userService.findUsersByBillNameBill(bill));
+  }
+
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> signup(@RequestBody User user) {
         log.info("SIGNUP");
@@ -48,7 +53,7 @@ public class UserController {
         return ResponseEntity.ok(userService.setAdmin(name));
     }
 
-  @PatchMapping(value = "/setbill/", consumes = "application/json", produces = "application/json")
+  @PostMapping(value = "/setbill")
   public ResponseEntity<String> setBill(@RequestBody User user) {
     return ResponseEntity.ok(userService.setBill(user.getUsername(), user.getBill().getNameBill()));
     }
