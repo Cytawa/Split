@@ -57,6 +57,11 @@ public class UserController {
   public ResponseEntity<String> setBill(@RequestBody User user) {
     return ResponseEntity.ok(userService.setBill(user.getUsername(), user.getBill().getNameBill()));
     }
+    @PostMapping(value = "/setexp/{username}/{expname}")
+    public ResponseEntity<Boolean> setExp(@PathVariable String username, String expname) {
+        userService.addExpensive(username, expname);
+        return ResponseEntity.ok(true);
+    }
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<Boolean> delete(@PathVariable String name) {

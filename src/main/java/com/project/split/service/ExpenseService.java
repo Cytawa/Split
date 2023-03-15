@@ -47,23 +47,25 @@ public class ExpenseService {
     }
 
     public Expense save(Expense expense) {
-        /**calculating the number of people to divide the expense and the sum after the division*/
-        int sum = userRepo.findByUsername(expense.getWhoPay()).getSumOfPay();
-        expense.setSplitExpense(expense.getSumExpense() / expense.getUsers().size());
-        sum -= (expense.getSumExpense());
-        userRepo.findByUsername(expense.getWhoPay()).setSumOfPay(sum);
         /**adding users to expenses*/
         Set<User> users = new HashSet<>();
-        for (User user : expense.getUsers()) {
-            users.add(userRepo.findByUsername(user.getUsername()));
-        }
+        //for (User user : expense.getUsers()) {
+           // users.add(userRepo.findByUsername(user.getUsername()));
+
+       // }
         expense.setUsers(users);
         /**adding split payment to users*/
         for (User user : expense.getUsers()) {
             user.setSumOfPay(user.getSumOfPay() + (expense.getSumExpense() / expense.getUsers().size()));
         }
+        /**calculating the number of people to divide the expense and the sum after the division*/
+        int sum = userRepo.findByUsername(expense.getWhoPay()).getSumOfPay();
+        expense.setSplitExpense(expense.getSumExpense() / expense.getUsers().size());
+        sum -= (expense.getSumExpense());
+        userRepo.findByUsername(expense.getWhoPay()).setSumOfPay(sum);
+
         /**adding date of payment*/
-        expense.setDate(LocalDate.now());
+       expense.setDate(LocalDate.now());
         return expenseRepo.save(expense);
     }
 
