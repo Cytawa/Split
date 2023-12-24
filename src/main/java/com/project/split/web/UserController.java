@@ -47,24 +47,25 @@ public class UserController {
 
     }
 
-    @PatchMapping("/setadmin/{name}")
-    public ResponseEntity<String> giveAdminRole(@PathVariable("name") String name) {
+  @PatchMapping("/setadmin/{name}")
+  public ResponseEntity<String> giveAdminRole(@PathVariable("name") String name) {
 
-        return ResponseEntity.ok(userService.setAdmin(name));
-    }
+    return ResponseEntity.ok(userService.setAdmin(name));
+  }
 
   @PostMapping(value = "/setbill")
   public ResponseEntity<String> setBill(@RequestBody User user) {
     return ResponseEntity.ok(userService.setBill(user.getUsername(), user.getBill().getNameBill()));
-    }
-    @PostMapping(value = "/setexp/{username}/{expname}")
-    public ResponseEntity<Boolean> setExp(@PathVariable String username, String expname) {
-        userService.addExpensive(username, expname);
-        return ResponseEntity.ok(true);
-    }
+  }
 
-    @DeleteMapping("/delete/{name}")
-    public ResponseEntity<Boolean> delete(@PathVariable String name) {
-        return ResponseEntity.ok(userService.deleteByName(name));
-    }
+  @PostMapping(value = "/setexp/{username}/{expname}")
+  public ResponseEntity<Boolean> setExp(@PathVariable String username, String expname) {
+    userService.addExpensive(username, expname);
+    return ResponseEntity.ok(true);
+  }
+
+  @DeleteMapping("/delete/{name}")
+  public ResponseEntity<Boolean> delete(@PathVariable String name) {
+    return ResponseEntity.ok(userService.deleteByName(name));
+  }
 }

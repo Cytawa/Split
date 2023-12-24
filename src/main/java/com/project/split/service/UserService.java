@@ -1,9 +1,11 @@
 package com.project.split.service;
 
-import com.project.split.entities.Expense;import com.project.split.entities.Role;
+import com.project.split.entities.Expense;
+import com.project.split.entities.Role;
 import com.project.split.entities.User;
 import com.project.split.repository.BillRepo;
-import com.project.split.repository.ExpenseRepo;import com.project.split.repository.UserRepo;
+import com.project.split.repository.ExpenseRepo;
+import com.project.split.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,11 +43,11 @@ public class UserService {
     userRepo.save(user);
     return "User added to Bill";
   }
-  public void addExpensive (String nameuser, String nameexpensive){
-    User user = userRepo.findByUsername(nameuser);
-    Expense expense=expenseRepo.findByNameExpanse(nameexpensive).orElseThrow();
-    expense.getUsers().add(user);
 
+  public void addExpensive(String nameuser, String nameexpensive) {
+    User user = userRepo.findByUsername(nameuser);
+    Expense expense = expenseRepo.findByNameExpanse(nameexpensive).orElseThrow();
+    expense.getUsers().add(user);
   }
 
   /** adding ADMIN role to user */
