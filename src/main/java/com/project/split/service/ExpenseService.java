@@ -26,25 +26,24 @@ public class ExpenseService {
      */
 
     public String findExpenseByBillName(String name) {
-        List<Integer> expenses = expenseRepo
-                .findExpenseByBillId(billRepo
-                        .findByNameBill(name).getId());
-        int sum = 0;
-        for (Integer number : expenses) {
-            sum += number;
-        }
-        return "Sum= " + sum;
+    List<Integer> expenses = expenseRepo.findExpenseByBillId(billRepo.findByNameBill(name).getId());
+    int sum = 0;
+    for (Integer number : expenses) {
+      sum += number;
     }
+    return "Sum= " + sum;
+  }
 
-    public Expense findByName(String name) {
-        return expenseRepo.findByNameExpanse(name)
-                .orElseThrow(() -> new NoIdException("Expense with given id not found"));
-    }
+  public Expense findByName(String name) {
+    return expenseRepo
+        .findByNameExpanse(name)
+        .orElseThrow(() -> new NoIdException("Expense with given id not found"));
+  }
 
-    public boolean deleteByName(String name) {
-        expenseRepo.delete(findByName(name));
-        return true;
-    }
+  public boolean deleteByName(String name) {
+    expenseRepo.delete(findByName(name));
+    return true;
+  }
 
   public Expense save(Expense expense) {
     /** adding users to expenses */

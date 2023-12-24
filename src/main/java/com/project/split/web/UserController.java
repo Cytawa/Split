@@ -40,12 +40,11 @@ public class UserController {
     return ResponseEntity.ok(userService.findUsersByBillNameBill(bill));
   }
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserDTO> signup(@RequestBody User user) {
-        log.info("SIGNUP");
-        return ResponseEntity.ok(userMapper.toDTO(userService.save(user)));
-
-    }
+  @PostMapping("/signup")
+  public ResponseEntity<UserDTO> signup(@RequestBody User user) {
+    log.info("SIGNUP");
+    return ResponseEntity.ok(userMapper.toDTO(userService.save(user)));
+  }
 
   @PatchMapping("/setadmin/{name}")
   public ResponseEntity<String> giveAdminRole(@PathVariable("name") String name) {
